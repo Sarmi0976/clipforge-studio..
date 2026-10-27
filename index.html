@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0b0d13">
+<title>ClipForge Studio — Browser Video Editor</title>
+<style>
+:root{color-scheme:dark;--bg:#0b0d13;--panel:#141925;--panel2:#1a2130;--line:#2a3346;--text:#f5f6fc;--muted:#9ca8be;--purple:#8e7bff;--mint:#55e0bf;--pink:#ff7897}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:14px/1.45 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}button,input,select{font:inherit}button{cursor:pointer;border:1px solid var(--line);border-radius:9px;padding:9px 12px;background:var(--panel2);color:var(--text);font-weight:650}button:hover{border-color:#65708b}button:disabled{opacity:.45;cursor:not-allowed}.primary{background:var(--purple);border-color:var(--purple);color:white}.mint{background:var(--mint);border-color:var(--mint);color:#06241d}.topbar{height:62px;display:flex;align-items:center;justify-content:space-between;padding:0 22px;border-bottom:1px solid var(--line);background:#0e1119;position:sticky;top:0;z-index:5}.brand{display:flex;gap:10px;align-items:center;font-weight:850;font-size:17px}.logo{width:32px;height:32px;display:grid;place-items:center;border-radius:10px;background:linear-gradient(135deg,var(--purple),#45d9d2);font-weight:900}.top-actions{display:flex;gap:8px;align-items:center}.badge{font-size:11px;color:var(--muted);border:1px solid var(--line);padding:6px 9px;border-radius:99px}
+.layout{max-width:1500px;margin:auto;padding:16px;display:grid;grid-template-columns:minmax(0,1.6fr) minmax(280px,.8fr);gap:14px}.panel{border:1px solid var(--line);border-radius:13px;background:var(--panel);overflow:hidden;min-width:0}.head{padding:12px 15px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;font-weight:750}.sub{color:var(--muted);font-size:12px;font-weight:500}.body{padding:14px}.preview-wrap{background:#07090e;display:grid;place-items:center;min-height:240px;aspect-ratio:16/9;position:relative;overflow:hidden}.preview-wrap canvas{width:100%;height:100%;object-fit:contain;max-height:64vh}.preview-empty{position:absolute;text-align:center;color:var(--muted);padding:24px}.preview-empty strong{display:block;color:var(--text);font-size:16px;margin:8px}.transport{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:12px}.time{font-variant-numeric:tabular-nums;color:var(--mint);font-size:12px;margin-left:auto}.timeline-panel{grid-column:1/-1}.timeline-toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:12px}.timeline{overflow-x:auto;padding-bottom:3px}.ruler{display:flex;justify-content:space-between;min-width:500px;padding:0 2px 7px;color:var(--muted);font-size:10px}.trackrow{display:grid;grid-template-columns:95px minmax(400px,1fr);gap:9px;align-items:center;margin:7px 0;min-width:500px}.trackname{color:var(--muted);font-size:11px;font-weight:800;letter-spacing:.5px}.track{height:37px;position:relative;background:#0b1019;border:1px solid #283248;border-radius:7px;overflow:hidden}.clip{height:100%;position:absolute;top:0;left:0;border-radius:5px;display:flex;align-items:center;padding:0 9px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:11px;font-weight:750;min-width:2px}.clip.video{background:linear-gradient(100deg,#6758c5,#8f7dff);color:#fff}.clip.audio{background:linear-gradient(100deg,#087b72,#39c9a9);color:#041d19}.clip.textclip{background:linear-gradient(100deg,#a94c72,#ff91b2);color:#2a0915}.playhead{position:absolute;top:0;bottom:0;width:2px;background:#fff;z-index:3;pointer-events:none;box-shadow:0 0 8px #fff8}.playhead:before{content:"";position:absolute;top:0;left:-4px;border-left:5px solid transparent;border-right:5px solid transparent;border-top:7px solid white}.props{display:flex;flex-direction:column;gap:15px}.prop-group{border-bottom:1px solid var(--line);padding-bottom:14px}.prop-group:last-child{border:0;padding-bottom:0}.prop-title{font-size:11px;color:var(--muted);font-weight:850;letter-spacing:1px;text-transform:uppercase;margin-bottom:11px}.field{margin-bottom:12px}.field:last-child{margin-bottom:0}.field label{display:flex;justify-content:space-between;gap:10px;font-size:12px;color:#d9deeb;margin-bottom:6px}.field output{color:var(--mint);font-variant-numeric:tabular-nums}.field input[type=range]{width:100%;accent-color:var(--purple)}.field input[type=text],.field input[type=number],.field select,.field textarea{width:100%;border:1px solid var(--line);border-radius:8px;background:#0c1018;color:var(--text);padding:9px}.field input[type=color]{width:100%;height:35px;background:#0c1018;border:1px solid var(--line);border-radius:8px;padding:3px}.field textarea{resize:vertical;min-height:65px}.two{display:grid;grid-template-columns:1fr 1fr;gap:9px}.hint{font-size:11px;color:var(--muted);margin-top:5px}.button-row{display:flex;gap:7px;flex-wrap:wrap}.button-row button{flex:1}.filebutton{position:relative;overflow:hidden}.filebutton input{position:absolute;inset:0;opacity:0;width:100%;cursor:pointer}.status{margin-top:12px;padding:10px 11px;background:#0b1018;border:1px solid var(--line);border-radius:8px;color:var(--muted);font-size:12px;min-height:39px}.status.good{color:#8debd5;border-color:#245b50}.status.bad{color:#ff9dad;border-color:#633443}.progress{height:4px;background:#242c3d;margin-top:8px;border-radius:5px;overflow:hidden}.progress div{height:100%;width:0;background:var(--mint)}.toggle{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:12px}.toggle input{accent-color:var(--purple)}.footer{max-width:1500px;padding:0 18px 25px;margin:auto;color:#78849a;font-size:11px}.mobile-tip{display:none}
+@media(max-width:920px){.layout{grid-template-columns:1fr;padding:10px}.timeline-panel{grid-column:auto}.topbar{padding:0 12px}.badge{display:none}.preview-wrap{min-height:180px}.mobile-tip{display:block}.trackrow{grid-template-columns:75px minmax(400px,1fr)}}@media(min-width:921px){.editor-panel{align-self:start;position:sticky;top:78px;max-height:calc(100vh - 92px);overflow:auto}}
+</style>
+</head>
+<body>
+<header class="topbar"><div class="brand"><div class="logo">CF</div><span>ClipForge <span style="color:var(--muted);font-weight:500">Studio</span></span></div><div class="top-actions"><span class="badge">LOCAL-FIRST EDITING</span><button id="newProject" class="secondary">New project</button><button id="export" class="primary" disabled>Export video ↗</button></div></header>
+<main class="layout">
+<section class="panel">
+ <div class="head"><span>Canvas preview</span><span id="projectState" class="sub">No media loaded</span></div>
+ <div class="preview-wrap"><canvas id="canvas" width="1280" height="720"></canvas><div class="preview-empty" id="empty"><div style="font-size:38px">▶</div><strong>Start creating</strong>Import a video and add music or text.</div></div>
+ <div class="body">
+  <div class="transport"><button id="play" disabled>▶ Play</button><button id="pause" disabled>Ⅱ Pause</button><button id="toStart" disabled>↤ Start</button><span id="clock" class="time">00:00.0 / 00:00.0</span></div>
+  <div class="status" id="status">Ready. Import a video clip to begin.</div><div class="progress"><div id="progressFill"></div></div>
+ </div>
+</section>
+<aside class="panel editor-panel">
+ <div class="head"><span>Inspector</span><span class="sub">Edit properties</span></div>
+ <div class="body props">
+  <div class="prop-group"><div class="prop-title">Media</div><div class="button-row"><label class="filebutton" style="flex:1;text-align:center">＋ Video<input id="videoFile" type="file" accept="video/*"></label><label class="filebutton" style="flex:1;text-align:center">♫ Music<input id="audioFile" type="file" accept="audio/*"></label></div><div class="hint" id="mediaInfo">Video and audio stay on your device during editing.</div></div>
+  <div class="prop-group"><div class="prop-title">Trim & timing</div>
+   <div class="field"><label>Clip start <output id="trimStartOut">0.0s</output></label><input id="trimStart" type="range" min="0" max="100" step=".1" value="0" disabled></div>
+   <div class="field"><label>Clip end <output id="trimEndOut">0.0s</output></label><input id="trimEnd" type="range" min="0" max="100" step=".1" value="100" disabled></div>
+   <div class="field"><label>Music volume <output id="volumeOut">70%</output></label><input id="volume" type="range" min="0" max="1" step=".01" value=".7" disabled></div>
+   <label class="toggle"><input id="muteSource" type="checkbox"> Mute original video audio</label>
+  </div>
+  <div class="prop-group"><div class="prop-title">Text overlay</div>
+   <div class="field"><label for="overlayText">Caption / title</label><textarea id="overlayText" placeholder="Type your title here…"></textarea></div>
+   <div class="two"><div class="field"><label for="textColor">Text color</label><input id="textColor" type="color" value="#ffffff"></div><div class="field"><label for="textSize">Font size</label><input id="textSize" type="number" min="16" max="120" value="54"></div></div>
+   <div class="field"><label>Vertical position <output id="textYOut">82%</output></label><input id="textY" type="range" min="10" max="90" value="82"></div>
+  </div>
+  <div class="prop-group"><div class="prop-title">Look & transitions</div>
+   <div class="field"><label for="filter">Color filter</label><select id="filter"><option value="none">Original</option><option value="cinema">Cinema</option><option value="mono">Black & white</option><option value="warm">Warm</option><option value="cool">Cool</option><option value="vivid">Vivid</option><option value="fade">Soft / faded</option></select></div>
+   <div class="field"><label>Brightness <output id="brightOut">100%</output></label><input id="brightness" type="range" min="50" max="160" value="100"></div>
+   <div class="field"><label>Contrast <output id="contrastOut">100%</output></label><input id="contrast" type="range" min="50" max="180" value="100"></div>
+   <div class="two"><div class="field"><label for="fadeIn">Fade in (sec)</label><input id="fadeIn" type="number" min="0" max="5" step=".1" value=".5"></div><div class="field"><label for="fadeOut">Fade out (sec)</label><input id="fadeOut" type="number" min="0" max="5" step=".1" value=".5"></div></div>
+   <div class="hint">Fades are applied to the exported preview recording. Single-clip transitions are fade-in and fade-out.</div>
+  </div>
+ </div>
+</aside>
+<section class="panel timeline-panel">
+ <div class="head"><span>Timeline</span><span class="sub">V1 · A1 · T1</span></div>
+ <div class="body">
+  <div class="timeline-toolbar"><div class="button-row"><button id="seekStart" class="secondary" disabled>↤ Go to start</button><button id="seekEnd" class="secondary" disabled>Go to end ↦</button></div><span class="sub mobile-tip">Swipe timeline horizontally if needed.</span></div>
+  <div class="timeline"><div class="ruler" id="ruler"><span>00:00</span><span>00:00</span><span>00:00</span><span>00:00</span><span>00:00</span></div>
+   <div class="trackrow"><div class="trackname">VIDEO · V1</div><div class="track" id="videoTrack"><div class="clip video" id="videoClip">Import video</div><div class="playhead" id="head1" style="left:0"></div></div></div>
+   <div class="trackrow"><div class="trackname">MUSIC · A1</div><div class="track" id="audioTrack"><div class="clip audio" id="audioClip" style="width:0">Add music</div><div class="playhead" id="head2" style="left:0"></div></div></div>
+   <div class="trackrow"><div class="trackname">TEXT · T1</div><div class="track" id="textTrack"><div class="clip textclip" id="textClip" style="width:0">Add a caption</div><div class="playhead" id="head3" style="left:0"></div></div></div>
+  </div>
+  <div class="hint">This version uses a single video clip with one music layer and one title layer. Click a track to move the playhead.</div>
+ </div>
+</section>
+</main>
+<div class="footer">ClipForge Studio is a browser-based editing starter. Export format availability depends on your browser. WebM is broadly supported; MP4 recording is available only in browsers that expose an MP4 MediaRecorder codec.</div>
+<video id="sourceVideo" playsinline preload="metadata" crossorigin="anonymous" style="display:none"></video><audio id="musicAudio" preload="metadata" loop style="display:none"></audio>
+<script>
+(() => {
+const $=id=>document.getElementById(id);
+const canvas=$('canvas'),ctx=canvas.getContext('2d'),video=$('sourceVideo'),music=$('musicAudio');
+let videoURL=null,audioURL=null,duration=0,playing=false,raf=0,mediaRecorder=null,recording=false,audioCtx=null,videoSource=null,musicSource=null,videoGain=null,musicGain=null,recordedChunks=[];
+const state={start:0,end:0,filter:'none',brightness:100,contrast:100,text:'',textColor:'#ffffff',textSize:54,textY:82,fadeIn:.5,fadeOut:.5,volume:.7};
+function say(message,type=''){ $('status').textContent=message;$('status').className='status '+type;}
+function fmt(t){t=Math.max(0,Number(t)||0);return String(Math.floor(t/60)).padStart(2,'0')+':'+String(Math.floor(t%60)).padStart(2,'0')+'.'+Math.floor((t%1)*10)}
+function short(t){t=Math.max(0,Number(t)||0);return String(Math.floor(t/60)).padStart(2,'0')+':'+String(Math.floor(t%60)).padStart(2,'0')}
+function loaded(){return !!video.src&&Number.isFinite(duration)&&duration>0}
+function enable(){const yes=loaded();['play','pause','toStart','seekStart','seekEnd','export'].forEach(id=>$(id).disabled=!yes||recording);['trimStart','trimEnd','volume'].forEach(id=>$(id).disabled=!yes);$('projectState').textContent=yes?'Video ready':'No media loaded';$('empty').classList.toggle('hidden',yes);$('sourceVideo').style.display='none';}
+function draw(){
+ const w=canvas.width,h=canvas.height;ctx.fillStyle='#07090e';ctx.fillRect(0,0,w,h);
+ if(loaded()&&video.readyState>=2){
+  let alpha=1,rel=video.currentTime-state.start,span=state.end-state.start;
+  if(state.fadeIn>0&&rel<state.fadeIn)alpha=Math.min(alpha,Math.max(0,rel/state.fadeIn));
+  if(state.fadeOut>0&&rel>span-state.fadeOut)alpha=Math.min(alpha,Math.max(0,(span-rel)/state.fadeOut));
+  const filters={none:'',cinema:'saturate(1.1) contrast(1.12) brightness(.92)',mono:'grayscale(1)',warm:'sepia(.25) saturate(1.25)',cool:'hue-rotate(12deg) saturate(.95)',vivid:'saturate(1.7) contrast(1.08)',fade:'saturate(.72) contrast(.82) brightness(1.08)'};
+  ctx.save();ctx.globalAlpha=alpha;ctx.filter=`${filters[state.filter]} brightness(${state.brightness}%) contrast(${state.contrast}%)`;
+  const scale=Math.min(w/video.videoWidth,h/video.videoHeight),dw=video.videoWidth*scale,dh=video.videoHeight*scale;
+  ctx.drawImage(video,(w-dw)/2,(h-dh)/2,dw,dh);ctx.restore();
+  if(state.text.trim()){
+   ctx.save();ctx.globalAlpha=alpha;ctx.font=`800 ${Math.max(16,Math.min(120,state.textSize))}px system-ui,sans-serif`;ctx.textAlign='center';ctx.textBaseline='middle';
+   const lines=state.text.split('\n').slice(0,4),lineHeight=state.textSize*1.18,total=lineHeight*lines.length,startY=h*state.textY/100-total/2;
+   ctx.shadowColor='#000c';ctx.shadowBlur=9;ctx.shadowOffsetY=3;ctx.fillStyle=state.textColor;
+   lines.forEach((line,i)=>{let txt=line;while(ctx.measureText(txt).width>w*.9&&txt.length>1)txt=txt.slice(0,-1);ctx.fillText(txt,w/2,startY+i*lineHeight,w*.9)});ctx.restore();
+  }
+ } else {
+  ctx.fillStyle='#9ca8be';ctx.font='22px system-ui';ctx.textAlign='center';ctx.fillText('Import a video to preview your edit',w/2,h/2);
+ }
+ updateClock();updateHead();
+ if(playing||recording)raf=requestAnimationFrame(draw);
+}
+function updateClock(){ $('clock').textContent=fmt(loaded()?video.currentTime:0)+' / '+fmt(state.end||duration); }
+function updateHead(){
+ const p=loaded()?Math.max(0,Math.min(1,(video.currentTime-state.start)/Math.max(.001,state.end-state.start))):0;
+ ['head1','head2','head3'].forEach(id=>$(id).style.left=(p*100)+'%');
+}
+function renderTimeline(){
+ const d=Math.max(1,duration),a=state.start,b=state.end;
+ $('trimStartOut').textContent=state.start.toFixed(1)+'s';$('trimEndOut').textContent=state.end.toFixed(1)+'s';
+ $('volumeOut').textContent=Math.round(state.volume*100)+'%';$('brightOut').textContent=state.brightness+'%';$('contrastOut').textContent=state.contrast+'%';$('textYOut').textContent=state.textY+'%';
+ $('videoClip').style.left=(a/d*100)+'%';$('videoClip').style.width=(Math.max(0,b-a)/d*100)+'%';$('videoClip').textContent=loaded()?`${videoURL?decodeURIComponent((videoURL.split('/').pop()||'Video')).slice(0,26):'Video'} · ${fmt(b-a)}`:'Import video';
+ $('audioClip').style.width=audioURL?'100%':'0';$('audioClip').textContent=audioURL?'♫ Music track · '+Math.round(state.volume*100)+'%':'Add music';
+ $('textClip').style.width=state.text.trim()?'100%':'0';$('textClip').textContent=state.text.trim()?state.text.replace(/\n/g,' ').slice(0,30):'Add a caption';
+ const ruler=$('ruler');ruler.innerHTML='';for(let i=0;i<5;i++){const s=document.createElement('span');s.textContent=short(duration*i/4);ruler.appendChild(s)}
+ draw();
+}
+function setTime(t){if(!loaded())return;video.currentTime=Math.max(state.start,Math.min(state.end,t));draw();}
+async function play(){if(!loaded())return; if(video.currentTime<state.start||video.currentTime>=state.end)video.currentTime=state.start;playing=true;try{await video.play();}catch(e){}draw();}
+function pause(){playing=false;video.pause();cancelAnimationFrame(raf);draw();}
+$('videoFile').addEventListener('change',e=>{
+ const f=e.target.files?.[0];if(!f)return;if(!f.type.startsWith('video/')){say('Choose a valid video file.','bad');return}
+ if(videoURL)URL.revokeObjectURL(videoURL);videoURL=URL.createObjectURL(f);video.src=videoURL;video.load();say('Loading video metadata…');
+});
+video.addEventListener('loadedmetadata',()=>{duration=video.duration;if(!Number.isFinite(duration)||duration<=0){say('Unable to read video duration. Try another browser-supported video file.','bad');return}state.start=0;state.end=duration;$('trimStart').max=duration;$('trimEnd').max=duration;$('trimStart').value=0;$('trimEnd').value=duration;enable();$('mediaInfo').textContent=`${video.videoWidth} × ${video.videoHeight} · ${fmt(duration)} · ${video.src?'video loaded':''}`;say('Video ready. Add a music track or title, then export.','good');renderTimeline();});
+video.addEventListener('timeupdate',()=>{if(!recording&&video.currentTime>=state.end){pause()}});
+$('audioFile').addEventListener('change',e=>{const f=e.target.files?.[0];if(!f)return;if(!f.type.startsWith('audio/')){say('Choose an audio file such as MP3, WAV or AAC.','bad');return}if(audioURL)URL.revokeObjectURL(audioURL);audioURL=URL.createObjectURL(f);music.src=audioURL;music.load();say('Music track added. It will loop to cover the trimmed video.','good');renderTimeline()});
+music.addEventListener('loadedmetadata',()=>{if(!Number.isFinite(music.duration))say('Music loaded, but duration could not be read.','bad');});
+$('trimStart').addEventListener('input',e=>{state.start=+e.target.value;if(state.start>=state.end)state.start=Math.max(0,state.end-.1);if(video.currentTime<state.start)setTime(state.start);renderTimeline()});
+$('trimEnd').addEventListener('input',e=>{state.end=+e.target.value;if(state.end<=state.start)state.end=Math.min(duration,state.start+.1);if(video.currentTime>state.end)setTime(state.end);renderTimeline()});
+$('volume').addEventListener('input',e=>{state.volume=+e.target.value;if(musicGain)musicGain.gain.value=state.volume;renderTimeline()});
+$('muteSource').addEventListener('change',()=>{if(videoGain)videoGain.gain.value=$('muteSource').checked?0:1});
+$('overlayText').addEventListener('input',e=>{state.text=e.target.value;renderTimeline()});
+$('textColor').addEventListener('input',e=>{state.textColor=e.target.value;draw()});
+$('textSize').addEventListener('input',e=>{state.textSize=Math.max(16,Math.min(120,+e.target.value||54));draw()});
+$('textY').addEventListener('input',e=>{state.textY=+e.target.value;renderTimeline()});
+$('filter').addEventListener('change',e=>{state.filter=e.target.value;draw()});
+$('brightness').addEventListener('input',e=>{state.brightness=+e.target.value;renderTimeline()});
+$('contrast').addEventListener('input',e=>{state.contrast=+e.target.value;renderTimeline()});
+$('fadeIn').addEventListener('change',e=>{state.fadeIn=Math.max(0,Math.min(5,+e.target.value||0));draw()});
+$('fadeOut').addEventListener('change',e=>{state.fadeOut=Math.max(0,Math.min(5,+e.target.value||0));draw()});
+$('play').addEventListener('click',play);$('pause').addEventListener('click',pause);$('toStart').addEventListener('click',()=>{pause();setTime(state.start)});
+$('seekStart').addEventListener('click',()=>{pause();setTime(state.start)});$('seekEnd').addEventListener('click',()=>{pause();setTime(state.end)});
+function clickSeek(id){$(id).addEventListener('click',e=>{if(!loaded())return;const r=e.currentTarget.getBoundingClientRect();const p=Math.max(0,Math.min(1,(e.clientX-r.left)/r.width));pause();setTime(state.start+p*(state.end-state.start))})}
+['videoTrack','audioTrack','textTrack'].forEach(clickSeek);
+async function setupAudio(){
+ if(!audioCtx){audioCtx=new (window.AudioContext||window.webkitAudioContext)();videoSource=audioCtx.createMediaElementSource(video);musicSource=audioCtx.createMediaElementSource(music);videoGain=audioCtx.createGain();musicGain=audioCtx.createGain();videoSource.connect(videoGain);musicSource.connect(musicGain);videoGain.connect(audioCtx.destination);musicGain.connect(audioCtx.destination);}
+ videoGain.gain.value=$('muteSource').checked?0:1;musicGain.gain.value=audioURL?state.volume:0;await audioCtx.resume();
+}
+function supportedMime(){
+ const options=['video/webm;codecs=vp9,opus','video/webm;codecs=vp8,opus','video/webm','video/mp4;codecs=avc1.42E01E,mp4a.40.2','video/mp4'];
+ return options.find(t=>window.MediaRecorder&&MediaRecorder.isTypeSupported(t))||'';
+}
+$('export').addEventListener('click',async()=>{
+ if(!loaded()||recording)return;
+ if(!window.MediaRecorder||!canvas.captureStream){say('This browser does not support recording a canvas. Try a recent version of Chrome, Edge or Firefox.','bad');return}
+ const mime=supportedMime();if(!mime){say('No supported MediaRecorder export format was found in this browser. Try Chrome or Edge.','bad');return}
+ recording=true;enable();pause();$('progressFill').style.width='0%';
+ let stream=null,videoStream=null,audioStream=null;
+ try{
+  say('Preparing export…');await setupAudio();
+  canvas.width=Math.min(1920,Math.max(640,video.videoWidth));canvas.height=Math.round(canvas.width*video.videoHeight/video.videoWidth);
+  videoStream=canvas.captureStream(30);
+  // Record a mixed audio stream from Web Audio, combining source video and music.
+  const destination=audioCtx.createMediaStreamDestination();
+  videoGain.disconnect();musicGain.disconnect();videoGain.connect(destination);musicGain.connect(destination);
+  videoGain.connect(audioCtx.destination);musicGain.connect(audioCtx.destination);
+  audioStream=destination.stream;
+  stream=new MediaStream([...videoStream.getVideoTracks(),...audioStream.getAudioTracks()]);
+  recordedChunks=[];
+  mediaRecorder=new MediaRecorder(stream,{mimeType:mime,videoBitsPerSecond:5000000,audioBitsPerSecond:160000});
+  mediaRecorder.ondataavailable=e=>{if(e.data&&e.data.size)recordedChunks.push(e.data)};
+  const done=new Promise((resolve,reject)=>{mediaRecorder.onstop=resolve;mediaRecorder.onerror=e=>reject(e.error||new Error('Recording failed'))});
+  mediaRecorder.start(500);video.currentTime=state.start;if(audioURL){music.currentTime=0;music.loop=true;await music.play().catch(()=>{})}
+  await new Promise(resolve=>{const fn=()=>{if(Math.abs(video.currentTime-state.start)<.15||video.currentTime===state.start){video.removeEventListener('seeked',fn);resolve()}};video.addEventListener('seeked',fn);setTimeout(resolve,500)});
+  await video.play();say('Recording your edited clip in real time… keep this tab open.','good');
+  const span=state.end-state.start;
+  await new Promise(resolve=>{
+   const tick=()=>{const elapsed=Math.max(0,video.currentTime-state.start);$('progressFill').style.width=Math.min(100,elapsed/span*100)+'%';
+    if(video.currentTime>=state.end||video.ended){video.pause();if(audioURL)music.pause();if(mediaRecorder.state!=='inactive')mediaRecorder.stop();resolve();return}
+    requestAnimationFrame(tick);
+   };requestAnimationFrame(tick);
+  });
+  await done;
+  const blob=new Blob(recordedChunks,{type:mime});const url=URL.createObjectURL(blob),a=document.createElement('a');
+  const ext=mime.includes('mp4')?'mp4':'webm';a.href=url;a.download='clipforge-edit.'+ext;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),60000);
+  say(`Export complete (${ext.toUpperCase()}). Your download should start automatically.`,'good');
+ }catch(err){console.error(err);say('Export failed: '+(err?.message||'unknown error')+'. Try Chrome/Edge, a shorter clip, or close other tabs.','bad')}
+ finally{
+  recording=false;playing=false;video.pause();music.pause();
+  try{if(videoGain&&audioCtx){videoGain.disconnect();musicGain.disconnect();videoGain.connect(audioCtx.destination);musicGain.connect(audioCtx.destination)}}catch(e){}
+  if(stream)stream.getTracks().forEach(t=>t.stop());enable();renderTimeline();
+ }
+});
+$('newProject').addEventListener('click',()=>{
+ if(recording)return;pause();video.removeAttribute('src');video.load();music.pause();music.removeAttribute('src');music.load();
+ if(videoURL)URL.revokeObjectURL(videoURL);if(audioURL)URL.revokeObjectURL(audioURL);videoURL=audioURL=null;duration=0;state.start=0;state.end=0;state.text='';$('overlayText').value='';$('videoFile').value='';$('audioFile').value='';$('mediaInfo').textContent='Video and audio stay on your device during editing.';enable();renderTimeline();say('New project ready. Import a video to begin.');
+});
+window.addEventListener('beforeunload',()=>{if(videoURL)URL.revokeObjectURL(videoURL);if(audioURL)URL.revokeObjectURL(audioURL)});
+enable();renderTimeline();
+})();
+</script>
+</body>
+</html>
